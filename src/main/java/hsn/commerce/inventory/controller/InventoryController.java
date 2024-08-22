@@ -1,9 +1,6 @@
 package hsn.commerce.inventory.controller;
 
-import hsn.commerce.inventory.model.AddInventoryRequest;
-import hsn.commerce.inventory.model.InventoryResponse;
-import hsn.commerce.inventory.model.UpdateInventoryRequest;
-import hsn.commerce.inventory.model.WebResponse;
+import hsn.commerce.inventory.model.*;
 import hsn.commerce.inventory.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -35,6 +32,18 @@ public class InventoryController {
         request.setId(inventoryId);
 
         InventoryResponse inventoryResponse = inventoryService.update(request, inventoryId);
+        return WebResponse.<InventoryResponse>builder().data(inventoryResponse).build();
+    }
+
+    @PatchMapping(
+            path = "/restock/{productId}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<InventoryResponse> restock(@RequestBody RestockRequest request,
+                                                  @PathVariable("productId") Integer productId
+    ) {
+        InventoryResponse inventoryResponse = inventoryService.restock(request, productId);
         return WebResponse.<InventoryResponse>builder().data(inventoryResponse).build();
     }
 }
