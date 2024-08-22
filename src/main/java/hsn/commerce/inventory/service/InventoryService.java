@@ -1,10 +1,7 @@
 package hsn.commerce.inventory.service;
 
 import hsn.commerce.inventory.entity.Inventory;
-import hsn.commerce.inventory.model.AddInventoryRequest;
-import hsn.commerce.inventory.model.InventoryResponse;
-import hsn.commerce.inventory.model.RestockRequest;
-import hsn.commerce.inventory.model.UpdateInventoryRequest;
+import hsn.commerce.inventory.model.*;
 import hsn.commerce.inventory.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,6 +57,21 @@ public class InventoryService {
         Integer currentInventory = inventory.getQuantity();
 
         inventory.setQuantity(currentInventory + request.getQuantity()); // Add inputted quantity to existing quantity
+        inventoryRepository.save(inventory);
+
+        return toInventoryResponse(inventory);
+    }
+
+    @Transactional
+    public InventoryResponse findInventoryById(Integer inventoryId, PurchaseRequest request) {
+        validationService.validate(request);
+
+        Inventory inventory = inventoryRepository.findInventoryById(inventoryId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Inventory not found."));
+
+        Integer currentInventory = inventory.getQuantity();
+
+        inventory.setQuantity(currentInventory - request.getQuantity()); // Add inputted quantity to existing quantity
         inventoryRepository.save(inventory);
 
         return toInventoryResponse(inventory);

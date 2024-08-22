@@ -46,4 +46,17 @@ public class InventoryController {
         InventoryResponse inventoryResponse = inventoryService.restock(request, productId);
         return WebResponse.<InventoryResponse>builder().data(inventoryResponse).build();
     }
+
+    @PatchMapping(
+            path = "/purchase/{inventoryId}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<InventoryResponse> purchaseByInventoryId(
+            @PathVariable("inventoryId") Integer inventoryId,
+            @RequestBody PurchaseRequest request
+    ) {
+        InventoryResponse inventoryResponse = inventoryService.findInventoryById(inventoryId, request);
+        return WebResponse.<InventoryResponse>builder().data(inventoryResponse).build();
+    }
 }
