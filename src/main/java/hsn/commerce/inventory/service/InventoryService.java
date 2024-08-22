@@ -24,7 +24,8 @@ public class InventoryService {
         validationService.validate(request);
 
         Inventory inventory = new Inventory();
-        inventory.setName(request.getName());
+        inventory.setProductId(request.getProductId());
+        inventory.setProductName(request.getProductName());
         inventory.setPrice(request.getPrice());
         inventory.setQuantity(request.getQuantity());
         inventoryRepository.save(inventory);
@@ -39,7 +40,8 @@ public class InventoryService {
         Inventory inventory = inventoryRepository.findById(inventoryId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Inventory not found."));
 
-        inventory.setName(request.getName());
+        inventory.setProductId(request.getProductId());
+        inventory.setProductName(request.getProductName());
         inventory.setPrice(request.getPrice());
         inventory.setQuantity(request.getQuantity());
         inventoryRepository.save(inventory);
@@ -50,7 +52,8 @@ public class InventoryService {
     private InventoryResponse toInventoryResponse(Inventory inventory) {
         return InventoryResponse.builder()
                 .id(inventory.getId())
-                .name(inventory.getName())
+                .productId(inventory.getProductId())
+                .productName(inventory.getProductName())
                 .price(inventory.getPrice())
                 .quantity(inventory.getQuantity())
                 .build();

@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 public class InventoryResponse {
     private Integer id;
 
-    private String name;
+    private Integer productId;
+
+    private String productName;
 
     private Integer price;
 

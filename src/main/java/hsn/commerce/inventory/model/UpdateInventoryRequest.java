@@ -18,9 +18,12 @@ public class UpdateInventoryRequest {
     @JsonIgnore
     private Integer id;
 
+    @NotNull
+    private Integer productId;
+
     @NotBlank
-    @Size(max = 100)
-    private String name;
+    @Size(max = 200)
+    private String productName;
 
     @NotNull
     private Integer price;

@@ -37,7 +37,8 @@ public class InventoryControllerTest {
     void addInventorySuccess() throws Exception {
         // Create request
         AddInventoryRequest request = new AddInventoryRequest();
-        request.setName("Kipas Angin Bladeless");
+        request.setProductId(100);
+        request.setProductName("Kipas Angin Bladeless");
         request.setPrice(1200000);
         request.setQuantity(250);
 
@@ -55,7 +56,8 @@ public class InventoryControllerTest {
 
             assertNull(response.getErrors());
 
-            assertEquals(request.getName(), response.getData().getName());
+            assertEquals(request.getProductId(), response.getData().getProductId());
+            assertEquals(request.getProductName(), response.getData().getProductName());
             assertEquals(request.getPrice(), response.getData().getPrice());
             assertEquals(request.getQuantity(), response.getData().getQuantity());
 
@@ -68,7 +70,8 @@ public class InventoryControllerTest {
     void addInventoryBadRequest() throws Exception {
         // Create request
         AddInventoryRequest request = new AddInventoryRequest();
-        request.setName("");
+        request.setProductId(100);
+        request.setProductName("");
         request.setPrice(1200000);
         request.setQuantity(250);
 
@@ -92,14 +95,16 @@ public class InventoryControllerTest {
     void updateInventorySuccess() throws Exception {
         // Insert data
         Inventory inventory = new Inventory();
-        inventory.setName("Kipas Angin Bladeless");
+        inventory.setProductId(100);
+        inventory.setProductName("Kipas Angin Bladeless");
         inventory.setPrice(1200000);
         inventory.setQuantity(250);
         inventoryRepository.save(inventory);
 
         // Create request
         AddInventoryRequest request = new AddInventoryRequest();
-        request.setName("Kipas Angin Bladeless - New");
+        request.setProductId(100);
+        request.setProductName("Kipas Angin Bladeless - New");
         request.setPrice(1250000);
         request.setQuantity(300);
 
@@ -117,7 +122,8 @@ public class InventoryControllerTest {
 
             assertNull(response.getErrors());
 
-            assertEquals(request.getName(), response.getData().getName());
+            assertEquals(request.getProductId(), response.getData().getProductId());
+            assertEquals(request.getProductName(), response.getData().getProductName());
             assertEquals(request.getPrice(), response.getData().getPrice());
             assertEquals(request.getQuantity(), response.getData().getQuantity());
 
@@ -128,8 +134,10 @@ public class InventoryControllerTest {
 
     @Test
     void updateInventoryNotFound() throws Exception {
+        // Create request
         AddInventoryRequest request = new AddInventoryRequest();
-        request.setName("Kipas Angin Bladeless");
+        request.setProductId(100);
+        request.setProductName("Kipas Angin Bladeless");
         request.setPrice(1200000);
         request.setQuantity(250);
 
@@ -150,8 +158,10 @@ public class InventoryControllerTest {
 
     @Test
     void updateInventoryBadRequest() throws Exception {
+        // Create request
         UpdateInventoryRequest request = new UpdateInventoryRequest();
-        request.setName("");
+        request.setProductId(100);
+        request.setProductName("");
         request.setPrice(1200000);
         request.setQuantity(250);
 

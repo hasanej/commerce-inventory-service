@@ -1,7 +1,9 @@
 package hsn.commerce.inventory.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +15,11 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String name;
+    @Column(name = "product_id")
+    private Integer productId;
+
+    @Column(name = "product_name")
+    private String productName;
 
     private Integer price;
 
